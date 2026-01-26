@@ -1,0 +1,12 @@
+{
+  "id": "${pluginId}",
+  "name": "${name}",
+  "description": "${description}",
+  "version": "${version}",
+  "authors": [
+    "LittleSkin"
+  ],
+  "url": "https://littleskin.cn",
+  "dependencies": [],
+  "main": "${group}.velocity.VelocityMain"
+}
