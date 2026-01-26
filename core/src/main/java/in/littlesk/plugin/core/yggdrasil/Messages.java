@@ -20,7 +20,7 @@ public final class Messages {
             "Yggdrasil 外置登录自带玩家皮肤加载功能，同时可提供与正版验证同样安全和流畅的玩家身份验证体验。",
             "For more information about Yggdrasil authentication, please visit:",
             "要了解关于 Yggdrasil 外置登录的更多信息，请访问：",
-            "https://manual.littlesk.in/advanced/yggdrasil",
+            "https://manual.littlesk.in/yggdrasil",
             "------"
     ));
 

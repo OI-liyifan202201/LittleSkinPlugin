@@ -13,7 +13,7 @@
 >
 > LittleSkin 强烈建议在合适的时机将服务器切换至 Yggdrasil 外置登录。
 
-要了解关于 Yggdrasil 外置登录的更多信息，请参阅：https://manual.littlesk.in/advanced/yggdrasil
+要了解关于 Yggdrasil 外置登录的更多信息，请参阅：https://manual.littlesk.in/yggdrasil
 
 ### 能做什么 & 谁适合用
 
