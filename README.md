@@ -1,8 +1,19 @@
+<div align="center">
+
+<img src="https://raw.githubusercontent.com/LittleSkinChina/logos/refs/heads/master/generated/LittleSkin_square.png" width="64" />
+
 # LittleSkinPlugin
 
-用于离线模式下的 Minecraft 服务端的，为玩家加载来自 LittleSkin 的皮肤和披风的插件。
+[![Downloads](https://img.shields.io/github/downloads/LittleSkinChina/LittleSkinPlugin/total)](https://github.com/LittleSkinChina/LittleSkinPlugin/releases)
+![GitHub License](https://img.shields.io/github/license/LittleSkinChina/LittleSkinPlugin)
+[![Sponsor](https://img.shields.io/badge/sponsor-30363D?logo=GitHub-Sponsors)](https://afdian.com/a/tnqzh123)
 
-注意：只有服务端可以处于离线模式，客户端仍然需要使用 LittleSkin 的 Yggdrasil 外置登录才可以显示皮肤。
+</div>
+
+用于离线模式下的 Minecraft 服务端的，为玩家加载来自 [LittleSkin](https://littleskin.cn/) 的皮肤和披风的插件，适用于 Paper 和 Velocity。
+
+> [!IMPORTANT]
+> **只有服务端可以处于离线模式，客户端仍然需要使用 LittleSkin 的 Yggdrasil 外置登录才可以显示皮肤。**
 
 > [!WARNING]
 > 除正版验证外，LittleSkin 在任何情况下都建议使用 Yggdrasil 外置登录。
@@ -13,19 +24,19 @@
 >
 > LittleSkin 强烈建议在合适的时机将服务器切换至 Yggdrasil 外置登录。
 
-要了解关于 Yggdrasil 外置登录的更多信息，请参阅：https://manual.littlesk.in/yggdrasil
+> 要了解关于 Yggdrasil 外置登录的更多信息，请参阅：<https://manual.littlesk.in/yggdrasil>
 
 ## 能做什么 & 谁适合用
 
-本插件能实现，在离线模式的 Minecraft 服务器中，为在客户端使用了 LittleSkin 的 Yggdrasil 外置登录的玩家加载皮肤和披风。
+**本插件能实现**：在离线模式的 Minecraft 服务器中，为在客户端使用了 LittleSkin 的 Yggdrasil 外置登录的玩家加载皮肤和披风。
 
-主要目的是解决「使用 Yggdrasil 外置登录的玩家加入离线模式的服务器后不加载皮肤」的问题。适合当前存档（周目）已经运行一段时间，想为玩家加载来自 LittleSkin 的皮肤，又由于各种原因无法切换至 Yggdrasil 外置登录的服务器使用。
+主要目的是解决 _「使用 Yggdrasil 外置登录的玩家加入离线模式的服务器后不加载皮肤」_ 的问题。适合当前存档（周目）已经运行一段时间，想为玩家加载来自 LittleSkin 的皮肤，又由于各种原因无法切换至 Yggdrasil 外置登录的服务器使用。
 
-也可以配合 [CustomSkinLoader](https://github.com/xfl03/MCCustomSkinLoader) 使用。当 CustomSkinLoader 版本高于 14.25 且加载列表中存在 `GameProfile` 加载项时（该加载项默认处于在加载列表首位），该加载项即会加载来自 LittleSkin 的皮肤。
+也可以配合 [CustomSkinLoader](https://github.com/xfl03/MCCustomSkinLoader) 使用。当 CustomSkinLoader 版本高于 14.25 且加载列表中存在 `GameProfile` 加载项时（该加载项默认处于加载列表首位），该加载项即会加载来自 LittleSkin 的皮肤。
 
 ## 做不到什么 & 谁不适合用
 
-本插件无法实现：
+**本插件无法实现：**
 
 - 在不对客户端做任何修改的情况下为玩家加载皮肤
     - 客户端必须使用 LittleSkin 的 Yggdrasil 外置登录
@@ -36,7 +47,7 @@
 - 加载高清皮肤
     - 原版 Minecraft 客户端不支持渲染高清皮肤，请配合 CustomSkinLoader 使用
 
-不建议在新的服务器存档（周目）中使用本插件。新开存档（周目）建议直接使用 Yggdrasil 外置登录，以在实现玩家皮肤加载的同时获得更好的玩家账号安全性和更流畅的玩家身份验证体验。
+**不建议在新的服务器存档（周目）中使用本插件**。新开存档（周目）建议直接使用 Yggdrasil 外置登录，以在实现玩家皮肤加载的同时获得更好的玩家账号安全性和更流畅的玩家身份验证体验。
 
 ## 服务端兼容性
 
@@ -48,7 +59,7 @@
 - Velocity 3.0+
     - 需要 Java 11+
 
-服务端必须处于离线模式。在线模式下本插件不会生效。
+**服务端必须处于离线模式。** 在线模式下本插件不会生效。
 
 > [!NOTE]
 > ### 为什么不支持更多服务端？
@@ -65,7 +76,7 @@
 
 你可以在 [Releases](https://github.com/LittleSkinChina/LittleSkinPlugin/releases) 页面下载到最新版本的插件。
 
-单一插件 jar 同时支持 Paper 和 Velocity。
+**本插件不区分 Paper 版或 Velocity 版**，单一插件 jar 即同时支持 Paper 和 Velocity。
 
 ## 使用方法
 
