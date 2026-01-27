@@ -3,7 +3,7 @@ package in.littlesk.plugin.bukkit;
 import in.littlesk.plugin.bukkit.listeners.PaperListener;
 import in.littlesk.plugin.core.Core;
 import in.littlesk.plugin.core.logger.JulLogger;
-import in.littlesk.plugin.core.yggdrasil.Messages;
+import in.littlesk.plugin.core.Messages;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;

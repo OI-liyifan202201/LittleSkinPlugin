@@ -8,7 +8,7 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import in.littlesk.plugin.core.Core;
 import in.littlesk.plugin.core.logger.Slf4jLogger;
-import in.littlesk.plugin.core.yggdrasil.Messages;
+import in.littlesk.plugin.core.Messages;
 import in.littlesk.plugin.velocity.listeners.VelocityListener;
 import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;

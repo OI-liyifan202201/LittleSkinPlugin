@@ -1,4 +1,4 @@
-package in.littlesk.plugin.core.yggdrasil;
+package in.littlesk.plugin.core;
 
 import java.util.Arrays;
 import java.util.Collection;
