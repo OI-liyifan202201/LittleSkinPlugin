@@ -74,7 +74,7 @@
 
 ## 获取插件
 
-你可以在 [Releases](https://github.com/LittleSkinChina/LittleSkinPlugin/releases) 页面下载到最新版本的插件。
+你可以在 [Releases](https://github.com/LittleSkinChina/LittleSkinPlugin/releases) 页面或 [红石中继站](https://www.mczwlt.net/resource/gwj6dfgr) 下载到最新版本的插件。
 
 **本插件不区分 Paper 版或 Velocity 版**，单一插件 jar 即同时支持 Paper 和 Velocity。
 
