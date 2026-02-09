@@ -11,6 +11,8 @@ import com.squareup.moshi.Moshi;
 import com.squareup.moshi.JsonAdapter;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture; 
+import java.io.IOException;
 
 public class Core {
     private final OkHttpClient httpClient;
@@ -28,6 +30,8 @@ public class Core {
         this.serverVer = serverVer;
         this.pluginVer = getClass().getPackage().getImplementationVersion();
         this.httpClient = new OkHttpClient.Builder()
+                .connectTimeout(1000, java.util.concurrent.TimeUnit.MILLISECONDS) 
+                .readTimeout(1000, java.util.concurrent.TimeUnit.MILLISECONDS)    
                 .addInterceptor(chain -> {
                     okhttp3.Request originalRequest = chain.request();
                     okhttp3.Request modifiedRequest = originalRequest.newBuilder()
@@ -46,8 +50,8 @@ public class Core {
         this.logger = logger;
     }
 
-    private Optional<UUIDResponse> getUUIDByName(String name) {
-        HttpUrl url = HttpUrl.get("https://littleskin.cn/api/yggdrasil/api/users/profiles/minecraft")
+    private CompletableFuture<Optional<UUIDResponse>> getUUIDByName(String name) { 
+        HttpUrl url = HttpUrl.get("https://littleskin.cn/api/yggdrasil/api/users/profiles/minecraft") 
                 .newBuilder()
                 .addPathSegment(name)
                 .build();
@@ -56,23 +60,35 @@ public class Core {
                 .get()
                 .build();
 
-        try (Response response = this.httpClient.newCall(request).execute()) {
-            if (response.isSuccessful() && response.code() != 204) {
-                UUIDResponse uuid = this.uuidResponseJsonAdapter.fromJson(response.body().source());
-                return Optional.ofNullable(uuid);
-            } else {
-                this.logger.error("Error while fetching UUID for name " + name + ": " + response.code());
-                this.logger.error("Response body: " + response.body().string());
+        CompletableFuture<Optional<UUIDResponse>> future = new CompletableFuture<>(); 
+        this.httpClient.newCall(request).enqueue(new okhttp3.Callback() { 
+            public void onResponse(okhttp3.Call call, Response response) {
+                try {
+                    if (response.isSuccessful() && response.code() != 204) {
+                        UUIDResponse uuid = uuidResponseJsonAdapter.fromJson(response.body().source());
+                        future.complete(Optional.ofNullable(uuid));
+                    } else {
+                        logger.error("Error while fetching UUID for name " + name + ": " + response.code());
+                        logger.error("Response body: " + response.body().string());
+                        future.complete(Optional.empty());
+                    }
+                } catch (Exception e) {
+                    logger.error("Exception while fetching UUID for name " + name + ": " + e.getMessage());
+                    future.completeExceptionally(e);
+                } finally {
+                    response.close(); 
+                }
             }
-        } catch (Exception e) {
-            this.logger.error("Exception while fetching UUID for name " + name + ": " + e.getMessage());
-            this.logger.error("Stack trace: " + e);
-        }
-        return Optional.empty();
+            public void onFailure(okhttp3.Call call, IOException e) {
+                logger.error("Exception while fetching UUID for name " + name + ": " + e.getMessage());
+                future.completeExceptionally(e);
+            }
+        });
+        return future; 
     }
 
-    private Optional<RemoteGameProfile> getPlayerProfileByUUID(String uuid) {
-        HttpUrl url = HttpUrl.get("https://littleskin.cn/api/yggdrasil/sessionserver/session/minecraft/profile")
+    private CompletableFuture<Optional<RemoteGameProfile>> getPlayerProfileByUUID(String uuid) { 
+        HttpUrl url = HttpUrl.get("https://littleskin.cn/api/yggdrasil/sessionserver/session/minecraft/profile") 
                 .newBuilder()
                 .addPathSegment(uuid)
                 .addQueryParameter("unsigned", "false")
@@ -82,27 +98,38 @@ public class Core {
                 .get()
                 .build();
 
-        try (Response response = this.httpClient.newCall(request).execute()) {
-            if (response.isSuccessful()) {
-                RemoteGameProfile profile = this.gameProfileJsonAdapter.fromJson(response.body().source());
-                return Optional.ofNullable(profile);
-            } else {
-                this.logger.error("Error while fetching profile for UUID " + uuid + ": " + response.code());
-                this.logger.error("Response body: " + response.body().string());
+        CompletableFuture<Optional<RemoteGameProfile>> future = new CompletableFuture<>(); 
+        this.httpClient.newCall(request).enqueue(new okhttp3.Callback() { 
+            public void onResponse(okhttp3.Call call, Response response) {
+                try {
+                    if (response.isSuccessful()) {
+                        RemoteGameProfile profile = gameProfileJsonAdapter.fromJson(response.body().source());
+                        future.complete(Optional.ofNullable(profile));
+                    } else {
+                        logger.error("Error while fetching profile for UUID " + uuid + ": " + response.code());
+                        logger.error("Response body: " + response.body().string());
+                        future.complete(Optional.empty());
+                    }
+                } catch (Exception e) {
+                    logger.error("Exception while fetching profile for UUID " + uuid + ": " + e.getMessage());
+                    future.completeExceptionally(e);
+                } finally {
+                    response.close(); 
+                }
             }
-        } catch (Exception e) {
-            this.logger.error("Exception while fetching profile for UUID " + uuid + ": " + e.getMessage());
-            this.logger.error("Stack trace: " + e);
-        }
-        return Optional.empty();
+            public void onFailure(okhttp3.Call call, IOException e) {
+                logger.error("Exception while fetching profile for UUID " + uuid + ": " + e.getMessage());
+                future.completeExceptionally(e);
+            }
+        });
+        return future; 
     }
 
-    public Optional<RemoteGameProfile> getGameProfileByName(String name) {
-        UUIDResponse uuid = this.getUUIDByName(name).orElse(null);
-        if (uuid == null) {
-            return Optional.empty();
-        }
-        return this.getPlayerProfileByUUID(uuid.getUniqueId());
+    public CompletableFuture<Optional<RemoteGameProfile>> getGameProfileByName(String name) { 
+        return getUUIDByName(name).thenCompose(optUuid -> 
+            optUuid.map(uuid -> getPlayerProfileByUUID(uuid.getUniqueId()))
+                   .orElse(CompletableFuture.completedFuture(Optional.empty()))
+        );
     }
 
     public void shutdown() {
