@@ -10,6 +10,8 @@ import in.littlesk.plugin.core.yggdrasil.RemoteGameProfile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 public class VelocityListener {
 
@@ -23,8 +25,10 @@ public class VelocityListener {
     public EventTask onGameProfileRequest(GameProfileRequestEvent event) {
         String name = event.getUsername();
 
+        CompletableFuture<Optional<RemoteGameProfile>> future = core.getGameProfileByName(name)
+                .orTimeout(1000, TimeUnit.MILLISECONDS);
         return EventTask.async(() -> {
-            RemoteGameProfile remoteProfile = core.getGameProfileByName(name).orElse(null);
+            RemoteGameProfile remoteProfile = future.join().orElse(null);
             if (remoteProfile == null) {
                 return;
             }
